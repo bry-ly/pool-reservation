@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
     }
 
     toast.success("Signed in successfully");
-    router.push("/admin");
+    router.replace("/admin");
     router.refresh();
   }
 

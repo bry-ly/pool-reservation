@@ -32,9 +32,6 @@ export default async function LandingPage() {
 
       {/* Hero */}
       <main className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-        <div className="mb-6 flex h-16 w-16 items-center justify-center bg-foreground/5">
-          <Logo className="h-8 text-foreground" />
-        </div>
         <h1 className="font-heading max-w-lg text-3xl font-semibold tracking-tight sm:text-4xl">
           Book your next pool session
         </h1>

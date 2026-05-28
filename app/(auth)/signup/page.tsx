@@ -37,7 +37,7 @@ export default function SignupPage() {
     }
 
     toast.success("Account created successfully");
-    router.push("/reserve");
+    router.replace("/reserve");
     router.refresh();
   }
 

@@ -26,9 +26,10 @@ export async function proxy(request: NextRequest) {
   const isAdminLogin = pathname === "/admin/login";
   const isAdminPage = pathname.startsWith("/admin") && !isAdminLogin;
   const isUserPage = pathname.startsWith("/reserve") || pathname.startsWith("/reservations");
+  const isPublicPage = pathname === "/";
 
   if (!session) {
-    if (isUserAuthPage || isAdminLogin) return NextResponse.next();
+    if (isUserAuthPage || isAdminLogin || isPublicPage) return NextResponse.next();
     if (isAdminPage) return NextResponse.redirect(new URL("/admin/login", request.url));
     return NextResponse.redirect(new URL("/login", request.url));
   }
