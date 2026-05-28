@@ -1,0 +1,126 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String        @id
+  name          String
+  email         String
+  emailVerified Boolean       @default(false)
+  image         String?
+  role          String        @default("user")
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  reservations  Reservation[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Pool {
+  id                  String              @id @default(cuid())
+  name                String
+  description         String?
+  address             String?
+  imageUrl            String?
+  isActive            Boolean             @default(true)
+  defaultMaxDuration  Int                 @default(240)
+  defaultMinAdvance   Int                 @default(2)
+  defaultCancelWindow Int                 @default(1)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  reservations        Reservation[]
+  schedules           ScheduleOverride[]
+
+  @@map("pool")
+}
+
+model ScheduleOverride {
+  id        String   @id @default(cuid())
+  poolId    String
+  date      DateTime
+  openTime  DateTime?
+  closeTime DateTime?
+  isClosed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  pool      Pool     @relation(fields: [poolId], references: [id], onDelete: Cascade)
+
+  @@unique([poolId, date])
+  @@map("schedule_override")
+}
+
+model Reservation {
+  id                 String   @id @default(cuid())
+  poolId             String
+  userId             String
+  startTime          DateTime
+  endTime            DateTime
+  status             String   @default("confirmed")
+  cancelledAt        DateTime?
+  cancellationReason String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  pool               Pool     @relation(fields: [poolId], references: [id], onDelete: Cascade)
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([poolId, startTime])
+  @@index([userId, status])
+  @@map("reservation")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
