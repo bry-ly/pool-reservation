@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/shared/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { IconPool, IconClock, IconCalendarEvent } from "@tabler/icons-react";
 
 export default async function LandingPage() {
@@ -10,11 +11,12 @@ export default async function LandingPage() {
   if (session) redirect("/reserve");
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-white to-zinc-50/80 dark:from-zinc-950 dark:to-zinc-900/80">
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-white to-teal-50/80 dark:from-zinc-950 dark:to-teal-950/30">
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4">
         <Logo className="h-6 text-foreground" />
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Link
             href="/login"
             className="px-4 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
