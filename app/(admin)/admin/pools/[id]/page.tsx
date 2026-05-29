@@ -31,6 +31,7 @@ export default async function EditPoolPage({
           address: pool.address ?? "",
           imageUrl: pool.imageUrl,
           isActive: pool.isActive,
+          type: pool.type,
           defaultMaxDuration: pool.defaultMaxDuration,
           defaultMinAdvance: pool.defaultMinAdvance,
           defaultCancelWindow: pool.defaultCancelWindow,
