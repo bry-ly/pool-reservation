@@ -46,6 +46,7 @@ export default async function PoolsPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Pool Name</TableHead>
+                <TableHead>Type</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="text-center">Max (m)</TableHead>
                 <TableHead className="text-center">Adv (h)</TableHead>
@@ -65,6 +66,11 @@ export default async function PoolsPage() {
                       )}
                       <span className="font-medium">{pool.name}</span>
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={pool.type === "kids" ? "default" : "secondary"} className="text-[9px] font-bold">
+                      {pool.type === "kids" ? "Kids" : "Adult"}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <Badge variant={pool.isActive ? "default" : "secondary"} className="text-[9px] font-bold">
