@@ -29,6 +29,7 @@ export function CreatePoolDialog() {
   const [defaultMinAdvance, setDefaultMinAdvance] = useState(2);
   const [defaultCancelWindow, setDefaultCancelWindow] = useState(1);
   const [isActive, setIsActive] = useState(true);
+  const [type, setType] = useState("adult");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -75,6 +76,7 @@ export function CreatePoolDialog() {
         address,
         imageUrl,
         isActive,
+        type,
         defaultMaxDuration,
         defaultMinAdvance,
         defaultCancelWindow,
@@ -121,6 +123,19 @@ export function CreatePoolDialog() {
           <div className="space-y-2">
             <label className="text-xs font-medium" htmlFor="dialog-address">Address</label>
             <Input id="dialog-address" value={address} onChange={(e) => setAddress(e.target.value)} />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-medium" htmlFor="dialog-type">Pool Type</label>
+            <select
+              id="dialog-type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className="flex h-9 w-full rounded-none border border-input bg-transparent px-3 py-1 text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              <option value="adult">Adult Pool</option>
+              <option value="kids">Kids Pool</option>
+            </select>
           </div>
 
           <div className="space-y-2">
