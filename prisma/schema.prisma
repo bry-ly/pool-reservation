@@ -32,6 +32,7 @@ model Pool {
   address             String?
   imageUrl            String?
   isActive            Boolean             @default(true)
+  type                String              @default("adult") // "kids" | "adult"
   defaultMaxDuration  Int                 @default(240)
   defaultMinAdvance   Int                 @default(2)
   defaultCancelWindow Int                 @default(1)
