@@ -58,7 +58,8 @@ export function CreatePoolDialog() {
       setImageUploading(false);
 
       if (!uploadRes.ok) {
-        setError("Failed to upload image");
+        const uploadError = await uploadRes.json().catch(() => ({ error: "Failed to upload image" }));
+        setError(uploadError.error || "Failed to upload image");
         setLoading(false);
         return;
       }
