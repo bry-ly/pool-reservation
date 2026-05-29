@@ -14,6 +14,7 @@ type PoolData = {
   address: string;
   imageUrl?: string | null;
   isActive: boolean;
+  type: string;
   defaultMaxDuration: number;
   defaultMinAdvance: number;
   defaultCancelWindow: number;
@@ -30,6 +31,7 @@ export function PoolForm({ pool }: { pool?: PoolData }) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
   const [isActive, setIsActive] = useState(pool?.isActive ?? true);
+  const [type, setType] = useState(pool?.type ?? "adult");
   const [defaultMaxDuration, setDefaultMaxDuration] = useState(pool?.defaultMaxDuration ?? 240);
   const [defaultMinAdvance, setDefaultMinAdvance] = useState(pool?.defaultMinAdvance ?? 2);
   const [defaultCancelWindow, setDefaultCancelWindow] = useState(pool?.defaultCancelWindow ?? 1);
@@ -79,6 +81,7 @@ export function PoolForm({ pool }: { pool?: PoolData }) {
         address,
         imageUrl: finalImageUrl,
         isActive,
+        type,
         defaultMaxDuration,
         defaultMinAdvance,
         defaultCancelWindow,
@@ -116,6 +119,18 @@ export function PoolForm({ pool }: { pool?: PoolData }) {
         <div className="space-y-2">
           <label className="text-xs font-medium" htmlFor="address">Address</label>
           <Input id="address" value={address} onChange={(e) => setAddress(e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-xs font-medium" htmlFor="type">Pool Type</label>
+          <select
+            id="type"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="flex h-9 w-full rounded-none border border-input bg-transparent px-3 py-1 text-xs shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            <option value="adult">Adult Pool</option>
+            <option value="kids">Kids Pool</option>
+          </select>
         </div>
         <div className="space-y-2">
           <label className="text-xs font-medium">Image</label>
