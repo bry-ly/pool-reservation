@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import Link from "next/link";
 import { IconPool, IconChevronRight, IconCalendar, IconClock } from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge";
 
 function formatTime(d: Date) {
   return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
@@ -70,7 +71,12 @@ export default async function ReservePage() {
               </div>
             )}
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium">{pool.name}</p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium">{pool.name}</p>
+                <Badge variant={pool.type === "kids" ? "default" : "secondary"} className="text-[10px]">
+                  {pool.type === "kids" ? "Kids" : "Adult"}
+                </Badge>
+              </div>
               {pool.description && (
                 <p className="truncate text-xs text-muted-foreground">{pool.description}</p>
               )}
