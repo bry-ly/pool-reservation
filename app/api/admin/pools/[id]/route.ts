@@ -14,7 +14,7 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
-  const { name, description, address, imageUrl, isActive, defaultMaxDuration, defaultMinAdvance, defaultCancelWindow } = body;
+  const { name, description, address, imageUrl, isActive, type, defaultMaxDuration, defaultMinAdvance, defaultCancelWindow } = body;
 
   if (!name?.trim()) {
     return NextResponse.json({ error: "Name is required" }, { status: 400 });
@@ -28,6 +28,7 @@ export async function PUT(
       address: address?.trim() || null,
       imageUrl: imageUrl || null,
       isActive: isActive ?? true,
+      type: type ?? "adult",
       defaultMaxDuration: defaultMaxDuration ?? 240,
       defaultMinAdvance: defaultMinAdvance ?? 2,
       defaultCancelWindow: defaultCancelWindow ?? 1,
